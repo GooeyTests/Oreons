@@ -1,0 +1,9 @@
+{
+    "id" : "Oreons",
+    "version" : "0.2.1-SNAPSHOT",
+    "author" : "Maternal Mathes.Wenzel@googlemail.com",
+    "displayName" : "Oreons",
+    "description" : "Oreon Invasion for Terasology",
+    "dependencies" : [],
+    "isServerSideOnly" : false
+}
