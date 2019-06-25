@@ -5,6 +5,7 @@ pipeline {
             steps {
                 echo 'Hello World!'
                 sh 'ls -l'
+                checkout scm
                 dir ('foo') {
                     writeFile file:'bar', text:'dummy'
                 }
