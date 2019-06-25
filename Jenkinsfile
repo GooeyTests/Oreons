@@ -15,14 +15,16 @@ pipeline {
                 not { equals expected: 1, actual: currentBuild.number}
             }
             steps {
-                try{
-                    copyArtifacts(projectName: currentBuild.projectName,
-                                    selector: specific("${currentBuild.previousBuild.number}"))
-                    def previousModule = readFile(file: "module.txt")
-                    def previousReadme = readFile(file: "README.md")
-                    def previousCover = readFile(file: "Cover.md")
-                } catch(err) {
-                    echo err
+                script{
+                    try{
+                        copyArtifacts(projectName: currentBuild.projectName,
+                                      selector: specific("${currentBuild.previousBuild.number}"))
+                        def previousModule = readFile(file: "module.txt")
+                        def previousReadme = readFile(file: "README.md")
+                        def previousCover = readFile(file: "Cover.md")
+                    } catch(err) {
+                        echo err
+                    }
                 }
             }
         }
