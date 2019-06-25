@@ -24,8 +24,6 @@ pipeline {
                 } catch(err) {
                     echo err
                 }
-            } else {
-                archiveArtifacts artifacts: 'output/*.*'
             }
         }
         stage('Deploy') {
