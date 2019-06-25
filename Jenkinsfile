@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Test') {
             when {
-                not { equals expected: 1, actual: currentBuild.number}
+                expression { return currentBuild.previousBuild }
             }
             steps {
                 script{
