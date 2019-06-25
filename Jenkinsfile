@@ -23,9 +23,9 @@ pipeline {
                     } catch(err) {
                         echo err
                     }
+                } else {
+                    archiveArtifacts artifacts: archiveArtifacts artifacts: 'output/*.*'
                 }
-            } else {
-                archiveArtifacts artifacts: archiveArtifacts artifacts: 'output/*.*'
             }
         }
         stage('Deploy') {
