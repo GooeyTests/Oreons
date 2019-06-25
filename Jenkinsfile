@@ -24,7 +24,7 @@ pipeline {
                         echo err
                     }
                 } else {
-                    archiveArtifacts artifacts: archiveArtifacts artifacts: 'output/*.*'
+                    archiveArtifacts artifacts: 'output/*.*'
                 }
             }
         }
