@@ -10,6 +10,10 @@ pipeline {
                 // Rest Build Logic
             }
         }
+        stage('Gather Data') {
+            dir('output')
+            sh "./scrape.groovy"
+        }
         stage('Test') {
             when {
                 expression { currentBuild.previousBuild }
@@ -24,6 +28,7 @@ pipeline {
                         def previousCover = readFile(file: "Cover.md")
                     } catch(err) {
                         echo err.toString()
+                        archiveArtifacts artifacts: './output/*.*', fingerprint: true
                     }
                 }
             }
