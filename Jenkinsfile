@@ -23,7 +23,7 @@ pipeline {
                         def previousReadme = readFile(file: "README.md")
                         def previousCover = readFile(file: "Cover.md")
                     } catch(err) {
-                        echo err
+                        echo err.toString()
                     }
                 }
             }
