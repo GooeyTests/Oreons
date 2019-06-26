@@ -11,8 +11,10 @@ pipeline {
             }
         }
         stage('Gather Data') {
-            dir('output')
-            sh "./scrape.groovy"
+            steps {
+                dir('output')
+                sh "./scrape.groovy"
+            }
         }
         stage('Test') {
             when {
