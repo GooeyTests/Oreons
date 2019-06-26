@@ -7,13 +7,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
+                checkout scm
                 // Rest Build Logic
             }
         }
         stage('Gather Data') {
             steps {
                 sh "mkdir -p output"
-                scrape = load 'scrape.groovy'
+                def scrape = load 'scrape.groovy'
                 scrape.run()
             }
         }
