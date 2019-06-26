@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Test') {
             when {
-                expression { return currentBuild.previousBuild }
+                expression { currentBuild.previousBuild }
             }
             steps {
                 script{
