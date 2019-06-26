@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Gather Data') {
             steps {
-                dir('output')
+                sh "mkdir output"
                 sh "./scrape.groovy"
             }
         }
