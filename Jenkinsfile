@@ -13,9 +13,11 @@ pipeline {
         }
         stage('Gather Data') {
             steps {
-                sh "mkdir -p output"
-                def scrape = load 'scrape.groovy'
-                scrape.run()
+                script {
+                    sh "mkdir -p output"
+                    def scrape = load 'scrape.groovy'
+                    scrape.run()
+                }
             }
         }
         stage('Test') {
