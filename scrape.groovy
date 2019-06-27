@@ -9,12 +9,8 @@ def scrape(){
 		moduleName = moduleJson.get("id")
 		println "Scraping data from " + moduleName
 	
-		moduleDir = new File(indexDir + moduleName)
-		println "Creating module directory"
-		moduleDir.mkdir()
-	
 		moduleSrc = moduleFile
-		moduleDst = new File(moduleDir.toString() + "/module.txt")
+		moduleDst = new File("./module.txt")
 		moduleDst << moduleSrc.text
 		println "Fetched module data"
 	
@@ -23,7 +19,7 @@ def scrape(){
 		if(readmeFind) {
 			readmeRoute = "./" + readmeFind[0].split("/").last()
 			readmeSrc = new File(readmeRoute)
-			readmeDst = new File(moduleDir.toString() + "/README.md")
+			readmeDst = new File("./README.md")
 			readmeDst << readmeSrc.text		
 			println "Fetched README data."
 		} else {
@@ -33,7 +29,7 @@ def scrape(){
 		println "Searching for logo image..."
 		logoSrc = new File("./logo.png")
 		if(logoSrc.exists()) {
-			logoDst = new File(moduleDir.toString() + "/logo.png")
+			logoDst = new File("./logo.png")
 			logoDst << logoSrc.bytes
 			println "Fetched logo image"
 		} else {
@@ -43,7 +39,7 @@ def scrape(){
 		println "Searching for cover image..."
 		logoSrc = new File("./cover.png")
 		if(logoSrc.exists()) {
-			logoDst = new File(moduleDir.toString() + "/cover.png")
+			logoDst = new File("./cover.png")
 			logoDst << logoSrc.bytes
 			println "Fetched cover image"
 		} else {
