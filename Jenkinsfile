@@ -14,7 +14,7 @@ pipeline {
         stage('Gather Data') {
             steps {
                 sh "mkdir -p output"
-                sh "groovyw scrape.groovy"
+                sh "./groovyw scrape.groovy"
             }
         }
         stage('Test') {
