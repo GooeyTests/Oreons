@@ -1,6 +1,6 @@
 import groovy.json.JsonSlurper
 
-def run(){
+def scrape(){
 	moduleFile = new File("./module.txt")
 	indexDir = "./output" // Needs to be changed according to workspace setting
 	
