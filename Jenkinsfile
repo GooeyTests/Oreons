@@ -16,7 +16,6 @@ pipeline {
                 sh "mkdir -p output"
                 sh "ls -l"
                 script {
-                    def module = load 'module.'
                     def code = load 'scrape.groovy'
                     code.scrape()
                 }
