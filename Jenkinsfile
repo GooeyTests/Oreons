@@ -13,8 +13,8 @@ pipeline {
         }
         stage('Gather Data') {
             steps {
-                def files = findFiles(glob: './**.md ./**.MD ./**.markdown ./**.MARKDOWN') echo 
                 sh "mkdir -p output"
+                sh "./groovy scrape.groovy"
             }
         }
         stage('Test') {
