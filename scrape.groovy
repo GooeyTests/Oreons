@@ -14,41 +14,42 @@ if(moduleFile.exists()) {
 	moduleDst << moduleSrc.text
 	println "Fetched module data"
 
+	dir = new File('./')
+
 	println "Searching for README file..."
-	new File('.').eachFileRecurse(FILES) {
-    	if(it.name.endsWith('.md') || it.name.endsWith('.markdown') || it.name.endsWith('.MD') || it.name.endsWith('.MARKDOWN')) {
+	readmeFound = 0
+	dir.eachFile { file ->
+    	if(file.name.endsWith('.md') || file.name.endsWith('.markdown') || file.name.endsWith('.MD') || file.name.endsWith('.MARKDOWN')) {
     		println "README Found."
-			readmeSrc = new File(it.toString())
+			readmeSrc = new File("./" + file.toString())
 			readmeDst = new File(indexDir.toString() + "/README.md")
 			readmeDst << readmeSrc.text		
 			println "Fetched README data."
-    	} else {
+			readmeFound += 1
+    	}
+	}
+
+ 	if(readmeFound == 0) {
     		println "README file not found, skipping the current step."
-    	}
+   	}
+
+	logoSrc = new File("./logo.png")
+	coverSrc = new File("./cover.png")
+
+	if(logoSrc.exists()) {
+		logoDst = new File(indexDir.toString() + "/logo.png")
+		logoDst << logoSrc.bytes
+		println "Fetched logo image."
+	} else {
+		println "Logo image not found, skipping the current step."
 	}
 
-	new File('.').eachFileRecurse(FILES) {
-    	if(it.name.startsWith('logo')) {
-    		println "Logo image found."
-			logoSrc = new File(it.toString())
-			logoDst = new File(indexDir.toString() + "/logo.png")
-			logoDst << logoSrc.bytes
-			println "Fetched logo image."
-    	} else {
-    		println "Logo image not found, skipping the current step."
-    	}
-	}
-
-	new File('.').eachFileRecurse(FILES) {
-    	if(it.name.startsWith('cover')) {
-    		println "Cover image found."
-			coverSrc = new File(it.toString())
-			coverDst = new File(indexDir.toString() + "/cover.png")
-			coverDst << coverSrc.bytes
-			println "Fetched cover image."
-    	} else {
-    		println "Cover image not found, skipping the current step."
-    	}
+	if(coverSrc.exists()) {
+		coverDst = new File(indexDir.toString() + "/cover.png")
+		coverDst << coverSrc.bytes
+		println "Fetched cover image."
+	} else {
+		println "Cover image not found, skipping the current step."
 	}
 
 	println "Finished scrapping " + moduleName
