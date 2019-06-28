@@ -17,7 +17,8 @@ if(moduleFile.exists()) {
 	println "Searching for README file..."
 	new File('.').eachFileRecurse(FILES) {
     	if(it.name.endsWith('.md') || it.name.endsWith('.markdown') || it.name.endsWith('.MD') || it.name.endsWith('.MARKDOWN')) {
-			readmeSrc = new File(it)
+    		println "README Found."
+			readmeSrc = new File(it.toString())
 			readmeDst = new File(indexDir.toString() + "/README.md")
 			readmeDst << readmeSrc.text		
 			println "Fetched README data."
@@ -26,24 +27,28 @@ if(moduleFile.exists()) {
     	}
 	}
 
-	println "Searching for logo image..."
-	logoSrc = new File("./logo.png")
-	if(logoSrc.exists()) {
-		logoDst = new File(indexDir.toString() + "/logo.png")
-		logoDst << logoSrc.bytes
-		println "Fetched logo image"
-	} else {
-		println "Logo image not found, skipping the current step."	
+	new File('.').eachFileRecurse(FILES) {
+    	if(it.name.startsWith('logo')) {
+    		println "Logo image found."
+			logoSrc = new File(it.toString())
+			logoDst = new File(indexDir.toString() + "/logo.png")
+			logoDst << logoSrc.bytes
+			println "Fetched logo image."
+    	} else {
+    		println "Logo image not found, skipping the current step."
+    	}
 	}
 
-	println "Searching for cover image..."
-	logoSrc = new File("./cover.png")
-	if(logoSrc.exists()) {
-		logoDst = new File(indexDir.toString() + "/cover.png")
-		logoDst << logoSrc.bytes
-		println "Fetched cover image"
-	} else {
-		println "Cover image not found, skipping the current step."
+	new File('.').eachFileRecurse(FILES) {
+    	if(it.name.startsWith('cover')) {
+    		println "Cover image found."
+			coverSrc = new File(it.toString())
+			coverDst = new File(indexDir.toString() + "/cover.png")
+			coverDst << coverSrc.bytes
+			println "Fetched cover image."
+    	} else {
+    		println "Cover image not found, skipping the current step."
+    	}
 	}
 
 	println "Finished scrapping " + moduleName
