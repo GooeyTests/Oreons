@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import static groovy.io.FileType.FILES
 
 moduleFile = new File("./module.txt")
 indexDir = "./output" // Needs to be changed according to workspace setting
@@ -14,15 +15,15 @@ if(moduleFile.exists()) {
 	println "Fetched module data"
 
 	println "Searching for README file..."
-	readmeFind = new FileNameFinder().getFileNames('./', '**.md **.MD **.markdown **.MARKDOWN')
-	if(readmeFind) {
-		readmeRoute = "./" + readmeFind[0].split("/").last()
-		readmeSrc = new File(readmeRoute)
-		readmeDst = new File(indexDir.toString() + "/README.md")
-		readmeDst << readmeSrc.text		
-		println "Fetched README data."
-	} else {
-		println "README file not found, skipping the current step."
+	new File('.').eachFileRecurse(FILES) {
+    	if(it.name.endsWith('.md') || it.name.endsWith('.markdown') || it.name.endsWith('.MD') || it.name.endsWith('.MARKDOWN')) {
+			readmeSrc = new File(it)
+			readmeDst = new File(indexDir.toString() + "/README.md")
+			readmeDst << readmeSrc.text		
+			println "Fetched README data."
+    	} else {
+    		println "README file not found, skipping the current step."
+    	}
 	}
 
 	println "Searching for logo image..."
