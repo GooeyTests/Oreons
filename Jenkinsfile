@@ -14,7 +14,7 @@ pipeline {
         stage('Gather Data') {
             steps {
                 sh "mkdir -p output"
-                sh "./groovyw scrape.groovy"
+                sh "./groovyw test.groovy"
             }
         }
         stage('Test') {
@@ -31,7 +31,7 @@ pipeline {
                         def previousCover = readFile(file: "Cover.md")
                     } catch(err) {
                         echo err.toString()
-                        archiveArtifacts artifacts: './output/*.*', fingerprint: true
+                        archiveArtifacts artifacts: 'output/*.*', fingerprint: true
                     }
                 }
             }
