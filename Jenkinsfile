@@ -28,7 +28,8 @@ pipeline {
                                       selector: specific("${currentBuild.previousBuild.number}"))
                         def previousModule = readFile(file: "module.txt")
                         def previousReadme = readFile(file: "README.md")
-                        def previousCover = readFile(file: "Cover.md")
+                        def previousCover = readFile(file: "Cover.png")
+                        def previouslogo = readFile(file: "logo.png")
                     } catch(err) {
                         echo err.toString()
                         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
