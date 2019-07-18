@@ -1,0 +1,25 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Test') {
+            steps {
+                script{
+                    def equals = "true"
+                    equals = sh "diff module.txt module.txt"
+                    if(fileExists("module.txt")) {
+                        if(equals == "true") {
+                            echo 'Same'
+                        } else {
+                            echo 'Not Same'
+                        }
+                    } else {
+                        echo 'File does not exist'
+                    }
+                }
+            }
+        }
+    }
+}

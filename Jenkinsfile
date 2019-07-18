@@ -30,6 +30,14 @@ pipeline {
                         def previousReadme = readFile(file: "README.md")
                         def previousCover = readFile(file: "Cover.png")
                         def previouslogo = readFile(file: "logo.png")
+
+                        if(fileExists("module.txt")) {
+                            if(sh "diff module.txt output/module.txt") {
+                                archiveArtifacts artifacts: 'output/module.txt', fingerprint: true
+                            }
+                        } else {
+                            archiveArtifacts artifacts: 'output/module.txt', fingerprint: true
+                        }
                     } catch(err) {
                         echo err.toString()
                         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
