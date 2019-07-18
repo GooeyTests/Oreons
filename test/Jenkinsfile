@@ -11,7 +11,7 @@ pipeline {
                     equals = sh "diff module.txt module.txt"
                     echo equals
                     if(fileExists("module.txt")) {
-                        if(equals == "null") {
+                        if(equals == null) {
                             echo 'Same'
                         } else {
                             echo 'Not Same'
