@@ -7,7 +7,7 @@ pipeline {
         stage('Test') {
             steps {
                 script{
-                    def equals = "true"
+                    def equals
                     equals = sh "diff module.txt module.txt"
                     echo equals
                     if(fileExists("module.txt")) {

@@ -1,5 +1,24 @@
 #!/usr/bin/env groovy
 
+void isEqual() {
+    steps {
+        script{
+            def equals
+            equals = sh "diff module.txt module.txt"
+            echo equals
+            if(fileExists("module.txt")) {
+                if(equals == null) {
+                    echo 'Same'
+                } else {
+                    echo 'Not Same'
+                }
+            } else {
+                echo 'File does not exist'
+            }
+        }
+    }
+}
+
 pipeline {
     agent any
 
@@ -17,7 +36,7 @@ pipeline {
                 sh "./groovyw scrape.groovy"
             }
         }
-        stage('Test') {
+        stage('Check Data') {
             when {
                 expression { currentBuild.previousBuild }
             }
@@ -31,13 +50,7 @@ pipeline {
                         def previousCover = readFile(file: "Cover.png")
                         def previouslogo = readFile(file: "logo.png")
 
-                        if(fileExists("module.txt")) {
-                            if(sh "diff module.txt output/module.txt") {
-                                archiveArtifacts artifacts: 'output/module.txt', fingerprint: true
-                            }
-                        } else {
-                            archiveArtifacts artifacts: 'output/module.txt', fingerprint: true
-                        }
+                        isEqual()
                     } catch(err) {
                         echo err.toString()
                         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
