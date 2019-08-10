@@ -45,8 +45,9 @@ pipeline {
                 script{
                     try{
                         copyArtifacts(projectName: currentBuild.projectName,
+                            filter: '*.*',
                             target: "./artifacts",
-                            selector: "lastSuccessful")
+                            selector: lastSuccessful())
 
                         sh "ls"
                         sh "ls artifacts/"
