@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-void archive() {
+def archive() {
     list = ["module.txt", "README.md", "logo.png", "cover.png"]
     changed = false
     
@@ -9,21 +9,23 @@ void archive() {
         if(fileExists("output/$file")) {
             equals = sh "diff output/$file artifacts/output/$file"
             if(equals == null) {
-                println("$file Same")
+                println("$file is same as old artifact.")
             } else {
-                println("$file Not Same")
+                println("$file is not same.")
                 changed = true
             }
         } else {
-            println("$file Doesn't Exist")
-            changed = true
+            println("$file doesn't exists.")
+            if(fileExists("artifacts/output/$file")) {
+                changed = true
+            }
         }
     }
 
     if(changed == true) {
+        println("Some files were updated. Archiving new meta-data...")
         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
     }
-
 }
 
 pipeline {
