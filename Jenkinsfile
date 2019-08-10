@@ -45,11 +45,12 @@ pipeline {
                 script{
                     try{
                         copyArtifacts(projectName: currentBuild.projectName,
-                            target: "./artifacts",
+                            target: "artifacts",
                             selector: lastSuccessful())
 
                         sh "ls"
-                        sh "ls artifacts/"
+                        sh "cd artifacts"
+                        sh "ls"
                         isEqual("module.txt")
                     } catch(err) {
                         echo err.toString()
