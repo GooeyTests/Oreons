@@ -4,7 +4,7 @@ void isEqual(file) {
     steps {
         script{
             def equals
-            equals = sh "diff output/${file} artifacts/${file}"
+            equals = sh "diff output/$file artifacts/$file"
             echo equals
             if(fileExists("module.txt")) {
                 if(equals == null) {
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script{
                     try{
-                        copyArtifacts(projectName: currentBuild.projectName) {
+                        copyArtifacts("$currentBuild.projectName") {
                             includePatterns('*.*')
                             targetDirectory('artifacts')
                             buildSelector {
