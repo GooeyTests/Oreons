@@ -5,12 +5,12 @@ void isEqual(file) {
     if(fileExists("output/$file")) {
         equals = sh "diff output/$file artifacts/output/$file"
         if(equals == null) {
-            sh "echo Same"
+            println("$file Same")
         } else {
-            sh "echo Not same"
+            println("$file Not Same")
         }
     } else {
-        sh "echo File doensn't exsit."
+        println("$file Doesn't Exist")
     }
 }
 
