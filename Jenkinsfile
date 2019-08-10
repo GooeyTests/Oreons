@@ -1,17 +1,29 @@
 #!/usr/bin/env groovy
 
-void isEqual(file) {
-    def equals
-    if(fileExists("output/$file")) {
-        equals = sh "diff output/$file artifacts/output/$file"
-        if(equals == null) {
-            println("$file Same")
+void archive() {
+    def list = ["module.txt", "README.md", "logo.png", "cover.png"]
+    def changed = false
+    
+    list.each {
+        def equals = " "
+        if(fileExists("output/$file")) {
+            equals = sh "diff output/$file artifacts/output/$file"
+            if(equals == null) {
+                println("$file Same")
+            } else {
+                println("$file Not Same")
+                changed = true
+            }
         } else {
-            println("$file Not Same")
+            println("$file Doesn't Exist")
+            changed = true
         }
-    } else {
-        println("$file Doesn't Exist")
     }
+
+    if(changed == true) {
+        archiveArtifacts artifacts: 'output/*.*', fingerprint: true
+    }
+
 }
 
 pipeline {
@@ -43,9 +55,9 @@ pipeline {
                             target: "artifacts",
                             selector: lastSuccessful())
 
-                        isEqual("cover.png")
+                        archive()
                     } catch(err) {
-                        sh "echo $err"
+                        println("$err")
                         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
                     }
                 }
