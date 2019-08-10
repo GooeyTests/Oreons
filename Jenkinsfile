@@ -46,8 +46,8 @@ pipeline {
                     try{
                         copyArtifacts(projectName: currentBuild.projectName,
                             target: "./artifacts",
-                            selector: lastSuccessful)
-                        
+                            selector: "lastSuccessful")
+
                         sh "ls"
                         sh "ls artifacts/"
                         isEqual("module.txt")
