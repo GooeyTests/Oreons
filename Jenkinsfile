@@ -1,21 +1,17 @@
 #!/usr/bin/env groovy
 
 void isEqual(file) {
-    steps {
-        script{
-            def equals
-            equals = sh "diff output/$file artifacts/$file"
-            echo equals
-            if(fileExists("module.txt")) {
-                if(equals == null) {
-                    echo 'Same'
-                } else {
-                    echo 'Not Same'
-                }
-            } else {
-                echo 'File does not exist'
-            }
+    def equals
+    equals = sh "diff output/$file artifacts/$file"
+    echo equals
+    if(fileExists("module.txt")) {
+        if(equals == null) {
+            echo 'Same'
+        } else {
+            echo 'Not Same'
         }
+    } else {
+        echo 'File does not exist'
     }
 }
 
