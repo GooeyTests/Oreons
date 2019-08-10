@@ -1,0 +1,18 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Fetch Gatsby Repo') {
+            steps {
+            	dir("gatsby") {
+            		git url: "https://github.com/Terasology/terasology.github.io.git" 
+    				sh "pwd"
+    				sh "ls"
+				}
+				sh "pwd"
+            }
+        }
+    }
+}

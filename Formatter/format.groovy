@@ -2,7 +2,7 @@ import groovy.json.JsonSlurper
 import static groovy.io.FileType.FILES
 
 dir = new File('.')
-dst = new File('./modules/')
+dst = new File('./gatsby/terasology.github.io/modules')
 dst.mkdir()
 
 dir.eachFile {

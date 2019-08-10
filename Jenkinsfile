@@ -25,6 +25,8 @@ def archive() {
     if(changed == true) {
         println("Some files were updated. Archiving new meta-data...")
         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
+    } else {
+        println("None of the required files were updated. Skipping archiving meta-data...")
     }
 }
 
