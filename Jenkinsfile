@@ -1,11 +1,11 @@
 #!/usr/bin/env groovy
 
 void archive() {
-    def list = ["module.txt", "README.md", "logo.png", "cover.png"]
-    def changed = false
+    list = ["module.txt", "README.md", "logo.png", "cover.png"]
+    changed = false
     
-    list.each {
-        def equals = " "
+    list.each { file ->
+        equals = ""
         if(fileExists("output/$file")) {
             equals = sh "diff output/$file artifacts/output/$file"
             if(equals == null) {
