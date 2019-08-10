@@ -2,7 +2,7 @@
 
 void isEqual(file) {
     def equals
-    equals = sh "diff output/$file artifacts/$file"
+    equals = sh "diff output/$file artifacts/output/$file"
     echo equals
     if(fileExists("module.txt")) {
         if(equals == null) {
