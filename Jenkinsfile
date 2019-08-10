@@ -5,12 +5,12 @@ void isEqual(file) {
     if(fileExists("output/$file")) {
         equals = sh "diff output/$file artifacts/output/$file"
         if(equals == null) {
-            sh "echo $file is same"
+            sh "echo Same"
         } else {
-            sh "echo $file is not same."
+            sh "echo Not same"
         }
     } else {
-        sh "echo $file doensn't exsit."
+        sh "echo File doensn't exsit."
     }
 }
 
@@ -42,10 +42,10 @@ pipeline {
                         copyArtifacts(projectName: currentBuild.projectName,
                             target: "artifacts",
                             selector: lastSuccessful())
-                        
+
                         isEqual("cover.png")
                     } catch(err) {
-                        echo err.toString()
+                        sh "echo $err"
                         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
                     }
                 }
