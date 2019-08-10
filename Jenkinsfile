@@ -1,10 +1,10 @@
 #!/usr/bin/env groovy
 
-void isEqual() {
+void isEqual(file) {
     steps {
         script{
             def equals
-            equals = sh "diff module.txt module.txt"
+            equals = sh "diff output/${file} artifacts/${file}"
             echo equals
             if(fileExists("module.txt")) {
                 if(equals == null) {
@@ -43,14 +43,16 @@ pipeline {
             steps {
                 script{
                     try{
-                        copyArtifacts(projectName: currentBuild.projectName,
-                                      selector: specific("${currentBuild.previousBuild.number}"))
-                        def previousModule = readFile(file: "module.txt")
-                        def previousReadme = readFile(file: "README.md")
-                        def previousCover = readFile(file: "Cover.png")
-                        def previouslogo = readFile(file: "logo.png")
-
-                        isEqual()
+                        copyArtifacts(projectName: currentBuild.projectName) {
+                            includePatterns('*.*')
+                            targetDirectory('artifacts')
+                            buildSelector {
+                                latestSuccessful(true)
+                            }
+                        }
+                        sh "ls"
+                        sh "ls artifacts/"
+                        isEqual("module.txt")
                     } catch(err) {
                         echo err.toString()
                         archiveArtifacts artifacts: 'output/*.*', fingerprint: true
