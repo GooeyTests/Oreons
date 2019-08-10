@@ -41,15 +41,13 @@ pipeline {
                 expression { currentBuild.previousBuild }
             }
             steps {
+                sh "mkdir -p artifacts"
                 script{
                     try{
-                        copyArtifacts("$currentBuild.projectName") {
-                            includePatterns('*.*')
-                            targetDirectory('artifacts')
-                            buildSelector {
-                                latestSuccessful(true)
-                            }
-                        }
+                        copyArtifacts(projectName: currentBuild.projectName,
+                            target: "./artifacts",
+                            selector: lastSuccessful)
+                        
                         sh "ls"
                         sh "ls artifacts/"
                         isEqual("module.txt")
